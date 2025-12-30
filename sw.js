@@ -1,10 +1,10 @@
 
-const CACHE_NAME = 'yunuslar-izin-v7';
+const CACHE_NAME = 'yunuslar-izin-v8';
 const ASSETS = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/logo.png',
+  './',
+  'index.html',
+  'manifest.json',
+  'logo.png',
   'https://cdn.tailwindcss.com'
 ];
 
@@ -30,7 +30,7 @@ self.addEventListener('fetch', event => {
   if (event.request.mode === 'navigate') {
     event.respondWith(
       fetch(event.request).catch(() => {
-        return caches.match('/index.html') || caches.match('/');
+        return caches.match('index.html') || caches.match('./');
       })
     );
     return;
