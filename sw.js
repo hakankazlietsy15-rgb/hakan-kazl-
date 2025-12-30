@@ -1,10 +1,10 @@
 
-const CACHE_NAME = 'yunuslar-izin-v6';
+const CACHE_NAME = 'yunuslar-izin-v7';
 const ASSETS = [
   '/',
   '/index.html',
   '/manifest.json',
-  'https://cdn-icons-png.flaticon.com/512/3652/3652191.png',
+  '/logo.png',
   'https://cdn.tailwindcss.com'
 ];
 
@@ -27,7 +27,6 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
-  // Navigasyon isteklerini her zaman index.html'e yönlendir (SPA mantığı)
   if (event.request.mode === 'navigate') {
     event.respondWith(
       fetch(event.request).catch(() => {
@@ -37,7 +36,6 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Diğer dosyalar için: Önbellekte varsa ver, yoksa internetten al
   event.respondWith(
     caches.match(event.request).then(response => {
       return response || fetch(event.request);

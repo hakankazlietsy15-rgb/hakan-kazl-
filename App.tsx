@@ -9,9 +9,8 @@ import Login from './components/Login';
 import EmployeeDashboard from './components/EmployeeDashboard';
 import AdminDashboard from './components/AdminDashboard';
 import { checkOverlaps, calculateDays } from './utils';
-import { LogOut, Calendar, Wifi, WifiOff } from 'lucide-react';
+import { LogOut, Wifi, WifiOff } from 'lucide-react';
 
-// Firebase Yapılandırması
 const firebaseConfig = {
   apiKey: "AIzaSyDFxNdDT3mgbYSQ4DxfEeZqld1HQnsK7qc",
   authDomain: "yunuslar-izin.firebaseapp.com",
@@ -23,7 +22,6 @@ const firebaseConfig = {
   measurementId: "G-FJD8ZXK47F"
 };
 
-// Global değişkenler yerine useEffect içinde yönetmek daha güvenli
 let database: any;
 
 const App: React.FC = () => {
@@ -42,30 +40,23 @@ const App: React.FC = () => {
         getAnalytics(app);
       }
 
-      // 1. Kullanıcıları Dinle
       const usersRef = ref(database, 'users');
       const unsubscribeUsers = onValue(usersRef, (snapshot) => {
         const data = snapshot.val();
         if (data) {
           const usersList = Object.values(data) as User[];
           setUsers(usersList);
-          
           if (currentUser) {
             const updatedMe = usersList.find(u => u.id === currentUser.id);
             if (updatedMe) setCurrentUser(updatedMe);
           }
         } else {
-          // İlk Kurulum
           INITIAL_USERS.forEach(user => {
             set(ref(database, 'users/' + user.id), user);
           });
         }
-      }, (error) => {
-        console.error("Firebase Kullanıcı Hatası:", error);
-        setDbError("Veritabanı bağlantısı kurulamadı.");
       });
 
-      // 2. Talepleri Dinle
       const requestsRef = ref(database, 'requests');
       const unsubscribeRequests = onValue(requestsRef, (snapshot) => {
         const data = snapshot.val();
@@ -92,7 +83,6 @@ const App: React.FC = () => {
         window.removeEventListener('offline', handleOffline);
       };
     } catch (e) {
-      console.error("Başlatma Hatası:", e);
       setDbError("Uygulama başlatılamadı.");
       setLoading(false);
     }
@@ -146,10 +136,13 @@ const App: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50 text-center p-4">
-        <div>
-          <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-slate-500 font-bold tracking-widest text-sm uppercase">YUNUSLAR SİSTEMİ YÜKLENİYOR...</p>
+      <div className="min-h-screen flex items-center justify-center bg-white text-center p-4">
+        <div className="animate-in zoom-in duration-500">
+          <div className="relative mb-6">
+             <div className="w-24 h-24 border-b-2 border-blue-600 rounded-full animate-spin absolute inset-0 -m-1"></div>
+             <img src="logo.png" alt="Yunuslar" className="w-24 h-24 relative z-10 p-2" />
+          </div>
+          <p className="text-slate-500 font-black tracking-widest text-sm uppercase">SİSTEM YÜKLENİYOR...</p>
         </div>
       </div>
     );
@@ -177,8 +170,8 @@ const App: React.FC = () => {
       <nav className="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-[100] px-4 sm:px-6 shadow-sm">
         <div className="max-w-7xl mx-auto flex justify-between h-16 items-center">
           <div className="flex items-center gap-3">
-            <div className="bg-blue-600 p-2 rounded-xl shadow-lg shadow-blue-200">
-              <Calendar className="w-5 h-5 text-white" />
+            <div className="bg-blue-50 p-1.5 rounded-xl shadow-sm">
+              <img src="logo.png" alt="Logo" className="w-8 h-8 object-contain" />
             </div>
             <div>
               <h1 className="text-base font-black text-slate-900 tracking-tight leading-none">YUNUSLAR İZİN</h1>
