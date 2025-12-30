@@ -6,7 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>YUNUSLAR İZİN | CANLI TİM PORTALI</title>
     
-    <!-- Mobil Uygulama Ayarları (APK Hazırlığı) -->
+    <!-- Yol Düzeltici: Eğer uygulama yanlış bir path ile açılırsa düzeltir -->
+    <script>
+      if (window.location.pathname.endsWith('index.html')) {
+        window.history.replaceState(null, '', window.location.pathname.replace('index.html', ''));
+      }
+    </script>
+    
+    <base href="./">
+    
     <meta name="theme-color" content="#2563eb">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -67,7 +75,6 @@
 </head>
 <body class="bg-[#f8fafc] text-slate-900 selection:bg-blue-100">
     <div id="root"></div>
-    <!-- Uygulama motorunu başlatan kritik bağlantı -->
     <script type="module" src="index.tsx"></script>
 </body>
 </html>
