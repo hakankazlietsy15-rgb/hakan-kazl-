@@ -1,5 +1,5 @@
 
-const CACHE_NAME = 'yunuslar-izin-v8';
+const CACHE_NAME = 'yunuslar-izin-v13';
 const ASSETS = [
   './',
   'index.html',
