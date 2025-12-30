@@ -3,14 +3,17 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 
-// Service Worker Kaydı (PWA/APK desteği için)
+// Service Worker Kaydı (Geliştirilmiş versiyon)
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').then(registration => {
-      console.log('SW registered: ', registration);
-    }).catch(registrationError => {
-      console.log('SW registration failed: ', registrationError);
-    });
+    // Path belirtirken ./ yerine direkt isim kullanmak bazen daha stabildir
+    navigator.serviceWorker.register('sw.js')
+      .then(registration => {
+        console.log('Sistem Hazır (SW Active)');
+      })
+      .catch(error => {
+        console.error('Sistem Yükleme Hatası:', error);
+      });
   });
 }
 
